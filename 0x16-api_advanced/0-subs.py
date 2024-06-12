@@ -4,13 +4,18 @@
 import requests
 
 
+#!/usr/bin/python3
+"subscribers count"
+
+import requests
+
+
 def number_of_subscribers(subreddit):
-    """Return the total number of subscribers on a given subreddit"""
     url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
-    headers = {'User-Agent': 'linux:0x16.api.adviced:v1.0.0 (by /u/bdov_)'
-            }
+    headers = {'User-Agent': 'Mozilla/5.0'}
     response = requests.get(url, headers=headers, allow_redirects=False)
-    if response.status_code == 404:
+    data = response.json()
+    if response.status_code != 200:
         return 0
-    results = reponse.json().get("data")
-    return results.get("subscribers")
+    else:
+        return data['data']['subscribers']
